@@ -62,11 +62,14 @@ public class CaShareUsageRecordAggregateRootEntity extends BaseEntity<CaShareUsa
 
     /**
      * 如果是登录场景，则丰富组件编码
+     * @return 如果是登录场景，则返回true，否则返回false
      */
-    public void enrichLoginComponentsCode() {
+    public boolean enrichLoginComponentsCode() {
         if (UsageScene.Scene.LOGIN.equals(this.usageScene.getValue())) {
             this.componentsCode = new ComponentsCode("LOGIN_COMPONENT_" + this.componentsCode.getValue());
+            return true;
         }
+        return false;
     }
 
     /**

@@ -42,8 +42,15 @@ public class CaShareUsageRecordDomainService {
         new ReceiveUsageRecordValidator().validate(caShareUsageRecordAggregateRootEntity);
 
         // 登录场景处理
-        caShareUsageRecordAggregateRootEntity.enrichLoginComponentsCode();
-        log.info("检测到登录场景，已执行特殊逻辑");
+        try {
+            boolean wasEnriched = caShareUsageRecordAggregateRootEntity.enrichLoginComponentsCode();
+            if (wasEnriched) {
+                log.info("检测到登录场景，已执行特殊逻辑");
+            }
+        } catch (Exception e) {
+            log.error("登录场景处理失败", e);
+            throw e;
+        }
 
         // 存储使用记录聚合
         caShareUsageRecordAggregateRootEntity.toNew();
