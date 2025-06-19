@@ -51,8 +51,23 @@ public class CaShareUsageRecordAggregateRootEntity extends BaseEntity<CaShareUsa
     /**
      * 使用证书
      */
-    @Setter
     private String usageCert;
+
+    /**
+     * 包内可见，仅供Converter/Assembler使用
+     */
+    void setUsageCert(String usageCert) {
+        this.usageCert = usageCert;
+    }
+
+    /**
+     * 如果是登录场景，则丰富组件编码
+     */
+    public void enrichLoginComponentsCode() {
+        if (UsageScene.Scene.LOGIN.equals(this.usageScene.getValue())) {
+            this.componentsCode = new ComponentsCode("LOGIN_COMPONENT_" + this.componentsCode.getValue());
+        }
+    }
 
     /**
      * 构建新记录
