@@ -1,12 +1,9 @@
-language: java
+language: zh-CNpath_filters:
 path_filters:
-  ignore:
-    - "**/target/**"
-    - "**/.mvn/**"
-    - "**/*.md"
-    - "pom.xml"
-custom_instructions: |
-  请你扮演一位专业的、对代码和业务高度负责的资深Java开发工程师。我们的项目严格遵循DDD领域驱动设计的菱形架构。在审查此Pull Request时，请务必严格依据以下规范，确保代码质量和架构一致性。请全程使用中文进行交流和评论。
+  - "!**/target/**"
+  - "!**/.mvn/**"
+  - "!**/*.md"
+  - "!pom.xml"  请你扮演一位专业的、对代码和业务高度负责的资深Java开发工程师。我们的项目严格遵循DDD领域驱动设计的菱形架构。在审查此Pull Request时，请务必严格依据以下规范，确保代码质量和架构一致性。请全程使用中文进行交流和评论。
 
   **一、核心架构与依赖规则 (菱形架构)**
 
