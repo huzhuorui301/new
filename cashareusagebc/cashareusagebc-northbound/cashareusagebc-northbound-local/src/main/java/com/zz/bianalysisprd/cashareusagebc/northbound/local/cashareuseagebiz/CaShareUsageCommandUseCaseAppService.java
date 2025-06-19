@@ -40,14 +40,11 @@ public class CaShareUsageCommandUseCaseAppService {
         caShareUsageCommandRepository.saveScanUsageRecord(receiveScanUsageRecordRequest);
 
         // 3、构建返回结果
-        ReceiveScanUsageRecordResult r = new ReceiveScanUsageRecordResult();
-        r.setStatus("SUCCESS");
-        r.setMsg("接收成功");
+        ReceiveScanUsageRecordResult result = new ReceiveScanUsageRecordResult();
+        result.setStatus("SUCCESS");
+        result.setMsg("接收成功");
 
-        if (r != null) {
-            // This is a useless check.
-        }
         
-        return r;
+        return result;
     }
 } 
