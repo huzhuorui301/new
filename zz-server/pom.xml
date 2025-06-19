@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>bianalysisprd</artifactId>
+        <groupId>com.zz</groupId>
+        <version>3.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>zz-server</artifactId>
+
+    <name>zz-server</name>
+    <packaging>jar</packaging>
+    <description>后端 Server 的主项目，通过引入需要 zz-module-xxx 的依赖，
+        从而实现提供 RESTful API 给 前端项目
+        本质上来说，它就是个空壳（容器）！</description>
+
+    <dependencies>
+        <!--        子模块 适配器-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.zz</groupId>-->
+        <!--            <artifactId>zz-module-demo-adapter</artifactId>-->
+        <!--            <version>${zz.project.version}</version>-->
+        <!--        </dependency>-->
+        
+        <!-- CA互认组件网络节点服务模块依赖 -->
+        <dependency>
+            <groupId>com.zz</groupId>
+            <artifactId>componentsnetworknodebc-northbound-remote</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zz</groupId>
+            <artifactId>componentsnetworknodebc-southbound-adapter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        
+        <!-- CA互认扫码使用服务模块依赖 -->
+        <dependency>
+            <groupId>com.zz</groupId>
+            <artifactId>cashareusagebc-northbound-remote</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zz</groupId>
+            <artifactId>cashareusagebc-southbound-adapter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.zz</groupId>
+            <artifactId>zz-core-boot</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.zz</groupId>
+                    <artifactId>zz-core-cloud</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.zz</groupId>
+            <artifactId>zz-starter-swagger</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-ui</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zz</groupId>
+            <artifactId>zz-core-launch</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zz</groupId>
+            <artifactId>zz-core-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>bianalysisprd</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
