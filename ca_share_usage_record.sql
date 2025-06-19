@@ -26,4 +26,6 @@ CREATE TABLE `tb_ca_share_usage_record` (
   KEY `idx_cert_sn` (`cert_sn`) USING BTREE COMMENT '证书序列号索引',
   KEY `idx_create_time` (`create_time`) USING BTREE COMMENT '创建时间索引',
   KEY `idx_tenant_id` (`tenant_id`) USING BTREE COMMENT '租户ID索引'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='CA共享使用记录表'; 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='CA共享使用记录表';
+
+-- This is a test comment. 
