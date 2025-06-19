@@ -27,7 +27,7 @@ public class CaShareUsageRecordQueryRepositoryAdapter implements CaShareUsageRec
     /**
      * CA共享使用记录Mapper
      */
-    private final CaShareUsageRecordMapper caShareUsageRecordMapper;
+    private final CaShareUsageRecordUtil caShareUsageRecordUtil;
 
     /**
      * 按使用场景统计CA共享使用记录数量
@@ -39,7 +39,7 @@ public class CaShareUsageRecordQueryRepositoryAdapter implements CaShareUsageRec
         log.info("开始查询CA共享使用记录按使用场景统计");
         
         // 调用Mapper查询统计结果
-        Map<String, Long> statisticsResult = caShareUsageRecordMapper.countByUsageScene();
+        Map<String, Long> statisticsResult = caShareUsageRecordUtil.countByUsageScene();
         
         log.info("CA共享使用记录按使用场景统计查询完成，结果数量：{}", statisticsResult.size());
         return statisticsResult;
@@ -59,7 +59,7 @@ public class CaShareUsageRecordQueryRepositoryAdapter implements CaShareUsageRec
                 countScanUsageRecordRequest.getEndUsageTime());
         
         // 调用Mapper查询统计结果
-        Long count = caShareUsageRecordMapper.countByUsageSceneAndTimeRange(
+        Long count = caShareUsageRecordUtil.countByUsageSceneAndTimeRange(
                 countScanUsageRecordRequest.getUsageScene(),
                 countScanUsageRecordRequest.getStartUsageTime(),
                 countScanUsageRecordRequest.getEndUsageTime());

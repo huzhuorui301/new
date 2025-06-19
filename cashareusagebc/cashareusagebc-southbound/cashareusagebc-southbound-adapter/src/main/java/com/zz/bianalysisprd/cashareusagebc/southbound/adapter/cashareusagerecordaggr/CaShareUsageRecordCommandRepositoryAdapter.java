@@ -27,7 +27,7 @@ public class CaShareUsageRecordCommandRepositoryAdapter implements CaShareUsageR
     /**
      * CA共享使用记录mapper接口
      */
-    private final CaShareUsageRecordMapper caShareUsageRecordMapper;
+    private final CaShareUsageRecordUtil caShareUsageRecordUtil;
 
     /**
      * 存储CA共享使用记录聚合
@@ -36,18 +36,18 @@ public class CaShareUsageRecordCommandRepositoryAdapter implements CaShareUsageR
      */
     @Override
     public void store(CaShareUsageRecordAggregateRootEntity caShareUsageRecordAggregateRootEntity) {
-        CaShareUsageRecordDO caShareUsageRecordDO = CaShareUsageRecordConverter.INSTANCE.toCaShareUsageRecordDO(caShareUsageRecordAggregateRootEntity);
+        CaShareUsageRecordDO caShareUsageRecordDO = CaShareUsageRecordHelper.INSTANCE.toCaShareUsageRecordDO(caShareUsageRecordAggregateRootEntity);
         switch (caShareUsageRecordAggregateRootEntity.getChangingStatus()) {
             case NEW:
-                caShareUsageRecordMapper.insert(caShareUsageRecordDO);
+                caShareUsageRecordUtil.insert(caShareUsageRecordDO);
                 caShareUsageRecordAggregateRootEntity.toUnChang();
                 break;
             case UPDATED:
-                caShareUsageRecordMapper.updateById(caShareUsageRecordDO);
+                caShareUsageRecordUtil.updateById(caShareUsageRecordDO);
                 caShareUsageRecordAggregateRootEntity.toUnChang();
                 break;
             case DELETED:
-                caShareUsageRecordMapper.deleteById(caShareUsageRecordDO);
+                caShareUsageRecordUtil.deleteById(caShareUsageRecordDO);
                 caShareUsageRecordAggregateRootEntity.toUnChang();
                 break;
             default:
@@ -85,7 +85,7 @@ public class CaShareUsageRecordCommandRepositoryAdapter implements CaShareUsageR
         caShareUsageRecordDO.setUpdateTime(LocalDateTime.now());
         
         // 保存到数据库
-        caShareUsageRecordMapper.insert(caShareUsageRecordDO);
+        caShareUsageRecordUtil.insert(caShareUsageRecordDO);
         
         log.info("CA互认扫码使用记录保存成功，记录序列号：{}", caShareUsageRecordDO.getCaShareUsageRecordSN());
     }

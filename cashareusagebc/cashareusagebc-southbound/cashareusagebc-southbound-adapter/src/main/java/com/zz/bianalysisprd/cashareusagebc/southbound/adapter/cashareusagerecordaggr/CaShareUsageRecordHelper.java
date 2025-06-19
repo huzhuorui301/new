@@ -19,9 +19,13 @@ import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
+/**
+ * @author zhenghui
+ * @date 2024/05/15 11:32
+ */
 @Mapper(uses = {CaShareUsageRecordMapping.class, CommonMapping.class})
-public interface CaShareUsageRecordConverter {
-    CaShareUsageRecordConverter INSTANCE = Mappers.getMapper(CaShareUsageRecordConverter.class);
+public interface CaShareUsageRecordHelper {
+    CaShareUsageRecordHelper INSTANCE = Mappers.getMapper(CaShareUsageRecordHelper.class);
 
     /**
      * 聚合根领域对象 转 数据库对象

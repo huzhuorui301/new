@@ -13,11 +13,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import java.util.Map;
 
-@Mapper
-public interface CaShareUsageRecordMapper extends BaseMapper<CaShareUsageRecordDO> {
+@Repository
+public interface CaShareUsageRecordUtil extends BaseMapper<CaShareUsageRecordDO> {
     
     /**
      * 按使用场景统计CA共享使用记录数量
