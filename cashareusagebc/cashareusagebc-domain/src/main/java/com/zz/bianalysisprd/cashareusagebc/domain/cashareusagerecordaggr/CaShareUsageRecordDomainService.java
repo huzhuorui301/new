@@ -12,6 +12,7 @@ package com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr;
 import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.domainservicevalidator.ReceiveUsageRecordValidator;
 import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.port.CaShareUsageRecordCommandRepository;
 import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.port.CaShareUsageRecordQueryRepository;
+import com.zz.bianalysisprd.cashareusagebc.northbound.local.cashareuseagebiz.pl.ReceiveScanUsageRecordRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,14 @@ public class CaShareUsageRecordDomainService {
         this.caShareUsageRecordCommandRepository.store(caShareUsageRecordAggregateRootEntity);
 
         log.info("成功接收CA互认扫码使用记录，记录SN：{}", caShareUsageRecordAggregateRootEntity.getCaShareUsageRecordSN().getValue());
+    }
+
+    /**
+     * 不好的实践方法，领域服务不应该知道Request的存在
+     * @param request
+     */
+    public void badPracticeMethod(ReceiveScanUsageRecordRequest request) {
+        log.info("这是一个非常糟糕的实践，领域服务直接依赖了北向网关的DTO: {}", request.getComponentsCode());
     }
 
     /**

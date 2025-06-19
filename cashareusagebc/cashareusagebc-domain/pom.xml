@@ -16,6 +16,11 @@
     <dependencies>
         <dependency>
             <groupId>com.zz</groupId>
+            <artifactId>cashareusagebc-northbound-local</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zz</groupId>
             <artifactId>zz-core-ddd</artifactId>
         </dependency>
     </dependencies>

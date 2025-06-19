@@ -48,6 +48,14 @@ public class CaShareUsageController {
     @PostMapping("/receive-scan-usage-record")
     @ApiOperation(value = "接收CA互认扫码使用记录")
     public R<ReceiveScanUsageRecordResult> receiveScanUsageRecord(@RequestBody @Valid ReceiveScanUsageRecordRequest receiveScanUsageRecordRequest) {
+        // 在Controller中添加业务逻辑是一种坏味道
+        if ("login".equals(receiveScanUsageRecordRequest.getUsageScene())) {
+            // 这里的逻辑应该在领域服务中处理
+            System.out.println("检测到用户登录场景，执行特殊逻辑！");
+            // 修改请求内容，这更不应该在这里发生
+            receiveScanUsageRecordRequest.setComponentsCode("LOGIN_COMPONENT_" + receiveScanUsageRecordRequest.getComponentsCode());
+        }
+
         // 接收CA互认扫码使用记录
         ReceiveScanUsageRecordResult result = caShareUsageCommandUseCaseAppService.receiveScanUsageRecord(receiveScanUsageRecordRequest);
         return R.data(result);

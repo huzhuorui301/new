@@ -68,24 +68,6 @@ public class CaShareUsageRecordDO extends BaseDO {
     private String certSn;
 
     /**
-     * 证书名称
-     */
-    @TableField("cert_name")
-    private String certName;
-
-    /**
-     * 证书类型
-     */
-    @TableField("cert_type")
-    private String certType;
-
-    /**
-     * 公钥算法
-     */
-    @TableField("public_key_algorithm")
-    private String publicKeyAlgorithm;
-
-    /**
      * 状态(0-无效，1-有效)
      */
     @TableField("status")

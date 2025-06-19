@@ -32,10 +32,7 @@ public interface CaShareUsageRecordConverter {
     @Mappings({
             @Mapping(target = "tradingSystemCode", source = "tradingSystem.tradingSystemCode"),
             @Mapping(target = "tradingSystemName", source = "tradingSystem.tradingSystemName"),
-            @Mapping(target = "certSn", source = "usageCert.certSn"),
-            @Mapping(target = "certName", source = "usageCert.certName"),
-            @Mapping(target = "certType", source = "usageCert.certType", qualifiedByName = "certTypeToString"),
-            @Mapping(target = "publicKeyAlgorithm", source = "usageCert.publicKeyAlgorithm", qualifiedByName = "publicKeyAlgorithmToString")
+            @Mapping(target = "certSn", source = "usageCert")
     })
     CaShareUsageRecordDO toCaShareUsageRecordDO(CaShareUsageRecordAggregateRootEntity caShareUsageRecordAggregateRootEntity);
 
@@ -47,7 +44,7 @@ public interface CaShareUsageRecordConverter {
      */
     @Mappings({
             @Mapping(target = "tradingSystem", source = "caShareUsageRecordDO", qualifiedByName = "toTradingSystem"),
-            @Mapping(target = "usageCert", source = "caShareUsageRecordDO", qualifiedByName = "toUsageCert")
+            @Mapping(target = "usageCert", source = "certSn")
     })
     CaShareUsageRecordAggregateRootEntity toCaShareUsageRecordAggregateRootEntity(CaShareUsageRecordDO caShareUsageRecordDO);
 
@@ -61,41 +58,5 @@ public interface CaShareUsageRecordConverter {
     default TradingSystem toTradingSystem(CaShareUsageRecordDO caShareUsageRecordDO) {
         return new TradingSystem(caShareUsageRecordDO.getTradingSystemCode(), caShareUsageRecordDO.getTradingSystemName());
     }
-
-    /**
-     * 数据库对象转使用证书值对象
-     *
-     * @param caShareUsageRecordDO 数据库对象
-     * @return 使用证书值对象
-     */
-    @Named("toUsageCert")
-    default UsageCert toUsageCert(CaShareUsageRecordDO caShareUsageRecordDO) {
-        UsageCert.CertType certType = UsageCert.CertType.valueOf(caShareUsageRecordDO.getCertType());
-        UsageCert.PublicKeyAlgorithm publicKeyAlgorithm = UsageCert.PublicKeyAlgorithm.valueOf(caShareUsageRecordDO.getPublicKeyAlgorithm());
-        return new UsageCert(caShareUsageRecordDO.getCertSn(), caShareUsageRecordDO.getCertName(), certType, publicKeyAlgorithm);
-    }
-
-    /**
-     * 证书类型枚举转字符串
-     *
-     * @param certType 证书类型枚举
-     * @return 字符串
-     */
-    @Named("certTypeToString")
-    default String certTypeToString(UsageCert.CertType certType) {
-        return certType != null ? certType.name() : null;
-    }
-
-    /**
-     * 公钥算法枚举转字符串
-     *
-     * @param publicKeyAlgorithm 公钥算法枚举
-     * @return 字符串
-     */
-    @Named("publicKeyAlgorithmToString")
-    default String publicKeyAlgorithmToString(UsageCert.PublicKeyAlgorithm publicKeyAlgorithm) {
-        return publicKeyAlgorithm != null ? publicKeyAlgorithm.name() : null;
-    }
-
 
 } 

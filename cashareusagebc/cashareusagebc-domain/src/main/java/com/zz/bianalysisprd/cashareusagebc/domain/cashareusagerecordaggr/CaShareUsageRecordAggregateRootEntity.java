@@ -51,7 +51,8 @@ public class CaShareUsageRecordAggregateRootEntity extends BaseEntity<CaShareUsa
     /**
      * 使用证书
      */
-    private UsageCert usageCert;
+    @Setter
+    private String usageCert;
 
     /**
      * 构建新记录
