@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.zz.bianalysisprd.cashareusagebc.northbound.local.cashareuseagebiz.pl.ReceiveScanUsageRecordRequest;
 import com.zz.bianalysisprd.cashareusagebc.northbound.local.cashareuseagebiz.pl.ReceiveScanUsageRecordResult;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * CA互认扫码使用记录业务服务（操作、命令职责）
@@ -16,6 +17,7 @@ import com.zz.bianalysisprd.cashareusagebc.northbound.local.cashareuseagebiz.pl.
  */
 @Service
 @AllArgsConstructor
+@Slf4j
 public class CaShareUsageCommandUseCaseAppService {
 
     /**
@@ -32,6 +34,7 @@ public class CaShareUsageCommandUseCaseAppService {
     public ReceiveScanUsageRecordResult receiveScanUsageRecord(ReceiveScanUsageRecordRequest receiveScanUsageRecordRequest) {
         // 1、校验请求参数
         // TODO: 参数校验逻辑
+        log.info("receiveScanUsageRecord request: {}", receiveScanUsageRecordRequest);
 
         // 2、调用命令仓储保存扫码使用记录
         caShareUsageCommandRepository.saveScanUsageRecord(receiveScanUsageRecordRequest);
