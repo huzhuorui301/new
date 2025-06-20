@@ -9,6 +9,7 @@
  */
 package com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr;
 
+import com.zz.bianalysisprd.cashareusagebc.northbound.local.cashareuseagebiz.pl.ReceiveScanUsageRecordRequest;
 import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.valueobject.*;
 import com.zz.core.ddd.base.BaseEntity;
 import com.zz.starter.serialno.template.SerialNoGeneratorTemplate;
@@ -80,5 +81,14 @@ public class CaShareUsageRecordManager extends BaseEntity<CaShareUsageRecordId> 
         super.toNew();
         // 生成业务序列号
         this.caShareUsageRecordSN = new CaShareUsageRecordSN(SerialNoGeneratorTemplate.get().generateSerialNo());
+    }
+
+    /**
+     * 这是一个违反依赖规则的坏方法.
+     * @param request
+     */
+    public void badMethod(ReceiveScanUsageRecordRequest request) {
+        System.out.println("这是一个坏方法，它违反了依赖规则.");
+        System.out.println(request.getUsageScene());
     }
 } 

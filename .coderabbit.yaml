@@ -4,22 +4,15 @@ language: zh-CN
 
 # CodeRabbit审查配置
 reviews:
-  # 排除不想审查的文件和目录
+  # 排除不想审查的文件和目录。这部分是正确的。
   path_filters:
     - "!**/target/**"
     - "!**/.mvn/**"
     - "!**/*.md"
     - "!pom.xml"
 
-  # 启用所有主要审查类别
-  checks:
-    security: true
-    performance: true
-    readability: true
-    architecture: true # 启用架构检查，AI会特别关注结构性问题
-
-# 为AI审查员提供高级别的指导
-# 这里我们将你的详细规范转化为AI可以理解的审查指令
+# 为AI审查员提供高级别的指导。这是配置的核心。
+# 这里我们将你的详细规范转化为AI可以理解的审查指令。
 custom_instructions: |
   # 角色和目标
   你是一位资深的Java工程师，对DDD菱形架构有深入的理解。你的任务是严格审查所有代码变更，确保它们完全符合我们团队的开发规范。
@@ -61,3 +54,4 @@ custom_instructions: |
   - **逻辑注释**: 对于复杂的业务逻辑，检查是否有清晰的行内注释（如 `// 1. 校验参数`）来解释代码意图。
 
   请基于以上规范进行审查，并提供具体、可操作的修改建议。
+
