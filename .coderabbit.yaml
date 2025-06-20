@@ -1,62 +1,28 @@
 # 配置文件应只包含CodeRabbit可解析的YAML格式内容
 version: 1
 language: zh-CN
-settings:
+
+# CodeRabbit审查配置
+reviews:
+  # 排除不想审查的文件和目录
   path_filters:
     - "!**/target/**"
     - "!**/.mvn/**"
     - "!**/*.md"
     - "!pom.xml"
-  # 启用DDD相关检查
+
+  # 启用所有主要审查类别
   checks:
     security: true
     performance: true
     readability: true
-    architecture: true  # 启用架构检查
+    architecture: true
 
-# 自定义规则（根据DDD规范配置）
-rules:
-  java:
-    # 模块命名规范检查
-    module-naming:
-      regex: '^(.*-prd|.*-grp|.*-bc|zz-server)$'
-      message: "模块命名不符合规范：项目级(-prd)、分组级(-grp)、限界上下文(-bc)、启动入口(zz-server)"
-      severity: error
-    
-    # 包命名规范检查
-    package-naming:
-      regex: '^com\.zz\.[a-z]+prd\.[a-z]+bc\..*$'
-      message: "包命名不符合规范：com.zz.项目名prd.[上下文名]bc..."
-      severity: error
-    
-    # 类命名规范检查
-    class-naming:
-      patterns:
-        - regex: '^.*AggregateRootEntity$'
-          message: "聚合根实体应使用 XxxAggregateRootEntity 命名"
-          severity: error
-        - regex: '^.*DomainService$'
-          message: "领域服务应使用 XxxDomainService 命名"
-          severity: error
-        # 其他类命名规则...
-    
-    # 禁止Domain层依赖外部层
-    forbidden-dependencies:
-      domain-packages:
-        - "com.zz.*.domain"
-      forbidden-packages:
-        - "com.zz.*.northbound"
-        - "com.zz.*.southbound"
-        - "com.zz.*.infrastructure"
-      message: "Domain层禁止依赖 northbound、southbound 或 infrastructure 层"
-      severity: error
-    
-    # 禁止使用Manager/Helper等命名反模式
-    forbidden-class-suffix:
-      suffixes:
-        - "Manager"
-        - "Helper"
-        - "Util"
-        - "Processor"
-      message: "避免使用模糊的类命名，建议重构为更精确的领域概念（如DomainService、Factory等）"
-      severity: warning
+# 为AI审查员提供高级别的指导
+# 告诉AI我们的项目规范在哪里，以及审查时需要特别关注什么
+custom_instructions: |
+  请严格遵循我们在 CONTRIBUTING.md 文件中定义的编码和架构规范。
+  审查时请特别关注以下几点：
+  1.  **命名规范**: 检查模块、包和类的命名是否符合DDD规范。例如，领域服务应以 `DomainService` 结尾，禁止使用 `Manager` 或 `Helper` 等后缀。
+  2.  **分层依赖**: 确保 Domain 层的代码没有依赖 northbound, southbound 或 infrastructure 层的代码。如果发现不正确的依赖注入或类引用，请明确指出。
+  3.  **DDD模式**: 检查代码是否正确使用了聚合、实体、值对象、领域服务等DDD模式。
