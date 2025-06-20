@@ -9,14 +9,23 @@
  */
 package com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.port;
 
-import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.CaShareUsageRecordAggregateRootEntity;
+import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.CaShareUsageRecordManager;
 
+/**
+ * CA共享使用记录命令仓储
+ *
+ * @author HZR 414117117@qq.com
+ * ================================<p>
+ * Date: 2024/11/6<p>
+ * Time: 15:53<p>
+ * ================================
+ */
 public interface CaShareUsageRecordCommandRepository {
 
     /**
      * 存储聚合根
      *
-     * @param caShareUsageRecordAggregateRootEntity 聚合根
+     * @param caShareUsageRecordManager 聚合根
      */
-    void store(CaShareUsageRecordAggregateRootEntity caShareUsageRecordAggregateRootEntity);
+    void store(CaShareUsageRecordManager caShareUsageRecordManager);
 } 

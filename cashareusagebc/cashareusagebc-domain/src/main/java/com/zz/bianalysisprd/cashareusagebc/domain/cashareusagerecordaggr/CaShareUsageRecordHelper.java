@@ -21,7 +21,7 @@ import java.util.Map;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class CaShareUsageRecordDomainService {
+public class CaShareUsageRecordHelper {
     /**
      * CA共享使用记录命令仓储
      */
@@ -35,15 +35,15 @@ public class CaShareUsageRecordDomainService {
     /**
      * 接收CA互认扫码使用记录
      *
-     * @param caShareUsageRecordAggregateRootEntity CA共享使用记录聚合根实体
+     * @param caShareUsageRecordManager CA共享使用记录聚合根实体
      */
-    public void receiveUsageRecord(CaShareUsageRecordAggregateRootEntity caShareUsageRecordAggregateRootEntity) {
+    public void receiveUsageRecord(CaShareUsageRecordManager caShareUsageRecordManager) {
         // 校验使用记录数据格式
-        new ReceiveUsageRecordValidator().validate(caShareUsageRecordAggregateRootEntity);
+        new ReceiveUsageRecordValidator().validate(caShareUsageRecordManager);
 
         // 登录场景处理
         try {
-            boolean wasEnriched = caShareUsageRecordAggregateRootEntity.enrichLoginComponentsCode();
+            boolean wasEnriched = caShareUsageRecordManager.enrichLoginComponentsCode();
             if (wasEnriched) {
                 log.info("检测到登录场景，已执行特殊逻辑");
             }
@@ -53,10 +53,10 @@ public class CaShareUsageRecordDomainService {
         }
 
         // 存储使用记录聚合
-        caShareUsageRecordAggregateRootEntity.toNew();
-        this.caShareUsageRecordCommandRepository.store(caShareUsageRecordAggregateRootEntity);
+        caShareUsageRecordManager.toNew();
+        this.caShareUsageRecordCommandRepository.store(caShareUsageRecordManager);
 
-        log.info("成功接收CA互认扫码使用记录，记录SN：{}", caShareUsageRecordAggregateRootEntity.getCaShareUsageRecordSN().getValue());
+        log.info("成功接收CA互认扫码使用记录，记录SN：{}", caShareUsageRecordManager.getCaShareUsageRecordSN().getValue());
     }
 
     /**

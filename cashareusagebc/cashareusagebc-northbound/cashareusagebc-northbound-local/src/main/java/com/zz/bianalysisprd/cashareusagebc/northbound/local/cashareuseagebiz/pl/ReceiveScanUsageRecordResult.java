@@ -3,6 +3,9 @@ package com.zz.bianalysisprd.cashareusagebc.northbound.local.cashareuseagebiz.pl
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.Builder;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  * 接收CA互认扫码使用记录结果对象
@@ -14,6 +17,9 @@ import lombok.Data;
  * ================================
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ApiModel(value = "接收CA互认扫码使用记录结果")
 public class ReceiveScanUsageRecordResult {
     /**
@@ -27,4 +33,10 @@ public class ReceiveScanUsageRecordResult {
      */
     @ApiModelProperty(value = "消息")
     private String msg;
+
+    /**
+     * CA共享使用记录业务序列号
+     */
+    @ApiModelProperty(value = "CA共享使用记录业务序列号")
+    private String caShareUsageRecordSN;
 } 

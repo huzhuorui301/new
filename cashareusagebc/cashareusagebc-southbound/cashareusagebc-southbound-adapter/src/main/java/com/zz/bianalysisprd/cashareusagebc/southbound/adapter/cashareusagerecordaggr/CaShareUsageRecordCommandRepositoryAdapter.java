@@ -9,7 +9,8 @@
  */
 package com.zz.bianalysisprd.cashareusagebc.southbound.adapter.cashareusagerecordaggr;
 
-import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.CaShareUsageRecordAggregateRootEntity;
+import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.CaShareUsageRecordId;
+import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.CaShareUsageRecordManager;
 import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.port.CaShareUsageRecordCommandRepository;
 import com.zz.bianalysisprd.cashareusagebc.northbound.local.cashareuseagebiz.CaShareUsageCommandRepository;
 import com.zz.bianalysisprd.cashareusagebc.northbound.local.cashareuseagebiz.pl.ReceiveScanUsageRecordRequest;
@@ -17,38 +18,38 @@ import com.zz.starter.serialno.template.SerialNoGeneratorTemplate;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import com.zz.bianalysisprd.cashareusagebc.southbound.adapter.cashareusagerecordaggr.db.CaShareUsageRecordMapper;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 
 @Slf4j
 @Component
 @AllArgsConstructor
 public class CaShareUsageRecordCommandRepositoryAdapter implements CaShareUsageRecordCommandRepository, CaShareUsageCommandRepository {
-    /**
-     * CA共享使用记录mapper接口
-     */
-    private final CaShareUsageRecordUtil caShareUsageRecordUtil;
+    @Resource
+    private CaShareUsageRecordUtil caShareUsageRecordUtil;
 
     /**
      * 存储CA共享使用记录聚合
      *
-     * @param caShareUsageRecordAggregateRootEntity CA共享使用记录聚合
+     * @param caShareUsageRecordManager CA共享使用记录聚合
      */
     @Override
-    public void store(CaShareUsageRecordAggregateRootEntity caShareUsageRecordAggregateRootEntity) {
-        CaShareUsageRecordDO caShareUsageRecordDO = CaShareUsageRecordHelper.INSTANCE.toCaShareUsageRecordDO(caShareUsageRecordAggregateRootEntity);
-        switch (caShareUsageRecordAggregateRootEntity.getChangingStatus()) {
+    public void store(CaShareUsageRecordManager caShareUsageRecordManager) {
+        CaShareUsageRecordDO caShareUsageRecordDO = CaShareUsageRecordHelper.INSTANCE.toCaShareUsageRecordDO(caShareUsageRecordManager);
+        switch (caShareUsageRecordManager.getChangingStatus()) {
             case NEW:
                 caShareUsageRecordUtil.insert(caShareUsageRecordDO);
-                caShareUsageRecordAggregateRootEntity.toUnChang();
+                caShareUsageRecordManager.toUnChang();
                 break;
             case UPDATED:
                 caShareUsageRecordUtil.updateById(caShareUsageRecordDO);
-                caShareUsageRecordAggregateRootEntity.toUnChang();
+                caShareUsageRecordManager.toUnChang();
                 break;
             case DELETED:
-                caShareUsageRecordUtil.deleteById(caShareUsageRecordDO);
-                caShareUsageRecordAggregateRootEntity.toUnChang();
+                caShareUsageRecordUtil.deleteById(caShareUsageRecordDO.getId());
+                caShareUsageRecordManager.toUnChang();
                 break;
             default:
                 break;

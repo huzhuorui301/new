@@ -22,7 +22,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Setter(AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = true)
-public class CaShareUsageRecordAggregateRootEntity extends BaseEntity<CaShareUsageRecordId> {
+public class CaShareUsageRecordManager extends BaseEntity<CaShareUsageRecordId> {
     /**
      * CA共享使用记录业务序列号
      */

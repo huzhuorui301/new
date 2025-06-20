@@ -9,7 +9,7 @@
  */
 package com.zz.bianalysisprd.cashareusagebc.southbound.adapter.cashareusagerecordaggr;
 
-import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.CaShareUsageRecordAggregateRootEntity;
+import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.CaShareUsageRecordManager;
 import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.CaShareUsageRecordMapping;
 import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.valueobject.*;
 import com.zz.core.ddd.common.mapstruct.CommonMapping;
@@ -28,29 +28,20 @@ public interface CaShareUsageRecordHelper {
     CaShareUsageRecordHelper INSTANCE = Mappers.getMapper(CaShareUsageRecordHelper.class);
 
     /**
-     * 聚合根领域对象 转 数据库对象
+     * 将聚合根实体转换为数据对象
      *
-     * @param caShareUsageRecordAggregateRootEntity 聚合根实体
-     * @return 数据库对象
+     * @param caShareUsageRecordManager 聚合根实体
+     * @return {@link CaShareUsageRecordDO}
      */
-    @Mappings({
-            @Mapping(target = "tradingSystemCode", source = "tradingSystem.tradingSystemCode"),
-            @Mapping(target = "tradingSystemName", source = "tradingSystem.tradingSystemName"),
-            @Mapping(target = "certSn", source = "usageCert")
-    })
-    CaShareUsageRecordDO toCaShareUsageRecordDO(CaShareUsageRecordAggregateRootEntity caShareUsageRecordAggregateRootEntity);
+    CaShareUsageRecordDO toCaShareUsageRecordDO(CaShareUsageRecordManager caShareUsageRecordManager);
 
     /**
-     * 数据库对象 转 聚合根领域对象
+     * 将数据对象转换为聚合根实体
      *
-     * @param caShareUsageRecordDO 数据库对象
-     * @return 聚合根实体
+     * @param caShareUsageRecordDO 数据对象
+     * @return {@link CaShareUsageRecordManager}
      */
-    @Mappings({
-            @Mapping(target = "tradingSystem", source = "caShareUsageRecordDO", qualifiedByName = "toTradingSystem"),
-            @Mapping(target = "usageCert", source = "certSn")
-    })
-    CaShareUsageRecordAggregateRootEntity toCaShareUsageRecordAggregateRootEntity(CaShareUsageRecordDO caShareUsageRecordDO);
+    CaShareUsageRecordManager toCaShareUsageRecordManager(CaShareUsageRecordDO caShareUsageRecordDO);
 
     /**
      * 数据库对象转交易系统值对象

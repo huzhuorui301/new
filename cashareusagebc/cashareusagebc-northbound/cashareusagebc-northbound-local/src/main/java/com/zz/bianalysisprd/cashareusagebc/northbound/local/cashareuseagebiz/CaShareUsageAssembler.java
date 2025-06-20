@@ -1,12 +1,12 @@
 package com.zz.bianalysisprd.cashareusagebc.northbound.local.cashareuseagebiz;
 
+import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.CaShareUsageRecordManager;
+import com.zz.bianalysisprd.cashareusagebc.northbound.local.cashareuseagebiz.pl.ReceiveScanUsageRecordRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 import com.zz.core.ddd.common.mapstruct.CommonMapping;
-import com.zz.bianalysisprd.cashareusagebc.northbound.local.cashareuseagebiz.pl.ReceiveScanUsageRecordRequest;
-import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.CaShareUsageRecordAggregateRootEntity;
 import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.valueobject.*;
 
 /**
@@ -36,7 +36,7 @@ public interface CaShareUsageAssembler {
             @Mapping(target="usageScene", expression="java(new com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.valueobject.UsageScene(request.getUsageScene()))"),
             @Mapping(target="componentsCode", expression="java(new com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.valueobject.ComponentsCode(request.getComponentsCode()))")
     })
-    CaShareUsageRecordAggregateRootEntity toAggregate(ReceiveScanUsageRecordRequest request);
+    CaShareUsageRecordManager toAggregate(ReceiveScanUsageRecordRequest request);
 
     // 这里可以添加需要的转换方法
 } 

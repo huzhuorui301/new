@@ -9,44 +9,44 @@
  */
 package com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.domainservicevalidator;
 
-import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.CaShareUsageRecordAggregateRootEntity;
+import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.CaShareUsageRecordManager;
 import com.zz.bianalysisprd.cashareusagebc.domain.cashareusagerecordaggr.CaShareUsageRecordResultCode;
 import com.zz.core.ddd.validator.AbstractValidator;
 import com.zz.core.tool.utils.ZzKits;
 import com.zz.starter.log.exception.ServiceException;
 
-public class ReceiveUsageRecordValidator extends AbstractValidator<CaShareUsageRecordAggregateRootEntity> {
+public class ReceiveUsageRecordValidator extends AbstractValidator<CaShareUsageRecordManager> {
 
     /**
      * 校验逻辑
      *
-     * @param caShareUsageRecordAggregateRootEntity 校验对象
+     * @param caShareUsageRecordManager 校验对象
      * @return 校验结果
      */
     @Override
-    public boolean validate(CaShareUsageRecordAggregateRootEntity caShareUsageRecordAggregateRootEntity) {
+    public boolean validate(CaShareUsageRecordManager caShareUsageRecordManager) {
         // 校验主体类型
-        if (ZzKits.isEmpty(caShareUsageRecordAggregateRootEntity.getSubjectType())) {
+        if (ZzKits.isEmpty(caShareUsageRecordManager.getSubjectType())) {
             throw new ServiceException(CaShareUsageRecordResultCode.DATA_FORMAT_ERROR);
         }
 
         // 校验组件编码
-        if (ZzKits.isEmpty(caShareUsageRecordAggregateRootEntity.getComponentsCode())) {
+        if (ZzKits.isEmpty(caShareUsageRecordManager.getComponentsCode())) {
             throw new ServiceException(CaShareUsageRecordResultCode.DATA_FORMAT_ERROR);
         }
 
         // 校验使用场景
-        if (ZzKits.isEmpty(caShareUsageRecordAggregateRootEntity.getUsageScene())) {
+        if (ZzKits.isEmpty(caShareUsageRecordManager.getUsageScene())) {
             throw new ServiceException(CaShareUsageRecordResultCode.DATA_FORMAT_ERROR);
         }
 
         // 校验交易系统
-        if (ZzKits.isEmpty(caShareUsageRecordAggregateRootEntity.getTradingSystem())) {
+        if (ZzKits.isEmpty(caShareUsageRecordManager.getTradingSystem())) {
             throw new ServiceException(CaShareUsageRecordResultCode.DATA_FORMAT_ERROR);
         }
 
         // 校验使用证书
-        if (ZzKits.isEmpty(caShareUsageRecordAggregateRootEntity.getUsageCert())) {
+        if (ZzKits.isEmpty(caShareUsageRecordManager.getUsageCert())) {
             throw new ServiceException(CaShareUsageRecordResultCode.DATA_FORMAT_ERROR);
         }
 
