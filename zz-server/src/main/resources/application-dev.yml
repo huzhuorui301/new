@@ -1,0 +1,150 @@
+#数据源配置
+spring:
+  redis:
+    #redis 单机环境配置
+    host: 49.232.13.110
+    port: 6379
+    password: kcbg12345^&*()
+    database: 2
+    ssl: false
+  datasource:
+    # MySql
+    url: jdbc:mysql://127.0.0.1:3306/ca?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+#    url: jdbc:mysql://49.232.13.110:3306/ai-design?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true
+#    username: ai-design
+#    password: 123456
+
+#zz配置
+zz:
+  log:
+    request:
+      error-log: false
+  #运维平台用户信息
+  sp-ops:
+    account: admin
+    password: 21232f297a57a5a743894a0e4a801fc3
+    roleName: administrator
+    tenantType: 0
+    orgId: 1782326349536985853
+    tenantId: "000000"
+  # ，招标APP，对接参数。
+  tender-app:
+    # 服务端点。
+    #    endpoint: http://123.56.236.113:8805
+    # 登录端点
+    endpoint: http://101.200.159.143:8805
+    # 平台编码。
+    #    platform-code: M1100000015
+    platform-code: CP000000001
+    # 工具编码。
+    tool-code: D1000000001
+    # 二维码，生成，接口地址。
+    qrcode-generate-url: ${zz.tender-app.endpoint}/zzhlBuyerController/getQRCodeContent
+    # 二维码，状态，接口地址。
+    qrcode-status-url: ${zz.tender-app.endpoint}/zzhlBuyerController/getQRCodeIsScaned
+    # 二维码，详情，接口地址。
+    qrcode-detail-url: ${zz.tender-app.endpoint}/zzhlBuyerController/getQRCodeLoginInfo
+  # ，投标APP，对接参数。
+  bid-app:
+    # 平台编码。ZXB00000001  A3401314520
+    platform-code: A3401314520
+    # 平台密钥
+    client-secret: 52a24b883e53412d997b82e81ee6fcda
+    # CA共享组件地址
+    ca-endpoint: http://47.94.148.221:82
+    # 二维码获取地址
+    # 二维码，生成，接口地址。
+    qrcode-generate-url: ${zz.bid-app.ca-endpoint}/zz-login/login/endpoint/generate-qr
+    qrcode-status-url: ${zz.bid-app.ca-endpoint}/zz-qr/qr/endpoint/scan-status
+    get-user-info-url: ${zz.bid-app.ca-endpoint}/zz-login/login/endpoint/get-user-info
+    # web oauth配置
+    oauth:
+      # 服务端点。
+      endpoint: https://companycenter-demo.ebinterlink.com
+      # 前置机端点。
+      front-endpoint: https://qianzhijitest.ebinterlink.com
+      # 应用唯一标识
+      client-id: ZXB00000001
+      # 应用密钥
+      client-secret: 52a24b883e53412d997b82e81ee6fcda
+      # 请使用 urlEncode 对链接进行处理
+      redirect-uri: http://39.105.189.83/index.html
+      # 填 code
+      response-type: code
+      # APP 机构交易码
+      unified-transaction-code:
+      # APP 个人交易码
+      personal-transaction-code:
+      # 二维码，生成，接口地址。
+      qrcode-generate-url: ${zz.bid-app.oauth.endpoint}/oauth/qrconnect?client_id=${zz.bid-app.oauth.client-id}&redirect_uri=${zz.bid-app.oauth.redirect-uri}&response_type=code
+      # 通过 code 获取 access_token
+      qrcode-access-token: ${zz.bid-app.oauth.endpoint}/oauth/token?client_id=${zz.bid-app.oauth.client-id}&client_secret=${zz.bid-app.oauth.client-secret}&code=%s&grant_type=authorization_code&redirect_uri=${zz.bid-app.oauth.redirect-uri}
+      # 通过token获取用户详情
+      qrcode-detail-url: ${zz.bid-app.oauth.front-endpoint}/sharing/zz-license/endpoint/share/user?access_token=%s
+  #分布式锁配置
+  lock:
+        enabled: true
+        address: redis://${spring.redis.host}:${spring.redis.port}
+        password: ${spring.redis.password}
+        database: ${spring.redis.database}
+oss:
+  enabled: true
+  tenant-mode: false
+
+sms:
+  enabled: false
+
+#clamav:
+#  ip-addr: 127.0.0.1
+#  port: 3310
+#  timeout: 3000
+# 支付宝支付
+alipay:
+#  沙箱
+  app-id: 9021000139601688
+  private-key: MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDv8qBxWwUFVBwylLr479xhub+lFsH2pllxKFgcmhxK57gM7XRsE83lj+08M6KaYYsVGRkxUClQTudF790dWju2PTCdy0rEwlbrkkOUGx5bvGgG3zadiD4h+1/CzxtXQ3+42ERz/o4ISkoCWTOors2ynnvZ+DO/RGtapl/44DrruR8m/wzmb/ttEhqJY6HChGo3rFGEsQ4Rx3zz4e/aQ63rkg/8MQ7ZOkt+OitOjqdOi5aUYXSJV2uHj+18AYPuZGkHLkYXwoEblfxIOxi9AXI4jEwCiK1OShYp3TrYOznL119rkEJjvpWsxL22QlXtbuStWLS+tP55l+GIDwUPgIiFAgMBAAECggEBAK/jAokVV1DYnvLU41mnObzJFBpH3FaZCedQ04Xj0el2ggu35Cd1PPCR2CzRDNhtuC32/+iOAjrEG/PAKC1j/3FO2VxRsLUaX+y+gpsGZfKI4Rhodvhy7liqkz+R4VDOQcmVflgouKSLEEU4bg2wVUghtFfLAOOrm6YPXzpn48j1tu1Hl1TtSl5151LaEVV2tRaGOYcUahgCGCF5aLBGaWP94gHmiRI3t0z2FP+aeM/UkH9+0swRMdkjPiYfWMDkTf5sxwmh8am94xHDGW/yGGR413ggIZoR/PlV+B1kUwC1WMU5m3VLK6o+gEFkgmeSsSa9iaXueWUMP4iahDhZRuECgYEA99wQ6z41MHuzOUBqgoJEY64BDOkxlPo2Uuq3wogDpI2XV2d0PXLcB1+C/8t9Wi9obKy3yzfSNmM4Qm7LJP1cVdSSbcg0LvuvD2zDfXT3jthpp/Hn44/EAC5d6QY1Tz65ez1aeG8x1xAoiOABaIq+Z+kcxiRHjBA0TKepwE7TKbMCgYEA99QKM2kGkscUPqSqUUKCY30IVN0/AiuU1GnYDtS/tT45Gd3N8JoTWucYh2/i6pa7T/7bkfvaZU1/O9HXLnf5izCXIF2pX783jsWxRPrQlxLLvNQYD4/zkVbXFuLhopAkRzLt86eFymRIbEIK2cvKZzrtGuDlah9Z7CjFt5XueOcCgYEA49Z8CvJVDGs5NXB8N9mtKf/iYU7ez/YtB41RO9Wxm4q4SpUDqhSyI2jtz1rrsIIRuIwQKxL1/h64sYCM5kSrow5TR+0X4vRiWIh/LwzdH4bZoJLiuTEHV69HjhOx31VmRN4CEuEL7Iii6icXxFR9cKE9XPoudpbSrIAWr3sF6rcCgYB/Fb3xZQ8Y33uzL++i4e9JI0nNcvMnor+cOXaxDEoOoAzaBdLgabI5MD503VxInekJ+ZARCUySHC59t3qX+q/9v3oP/9emIMFVtmzUCaZDgkD14PFBsbjeM+DyfH/mQ/JGjIhXJPXHtqso0KkNzKJLU31ZBjC+vbr4DmRtYzY5ywKBgQDTTnMLU0b9Ulj0TF9rJslgsvEyrO7b2IStK0m7VSe2KRzzet4yee1BVI+mSKJnYQEcC37IpOZ0mSZMoDmFvoQ3N13bRMcpEJf0aSWulrhXJCnQjKu61jvyLl9lqbVHy2ZzMquLbgQDfkbSXd/hGQeoQevXePZq1Su+3KoIzy1G+w==
+  public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7/KgcVsFBVQcMpS6+O/cYbm/pRbB9qZZcShYHJocSue4DO10bBPN5Y/tPDOimmGLFRkZMVApUE7nRe/dHVo7tj0wnctKxMJW65JDlBseW7xoBt82nYg+Iftfws8bV0N/uNhEc/6OCEpKAlkzqK7Nsp572fgzv0RrWqZf+OA667kfJv8M5m/7bRIaiWOhwoRqN6xRhLEOEcd88+Hv2kOt65IP/DEO2TpLfjorTo6nTouWlGF0iVdrh4/tfAGD7mRpBy5GF8KBG5X8SDsYvQFyOIxMAoitTkoWKd062Ds5y9dfa5BCY76VrMS9tkJV7W7krVi0vrT+eZfhiA8FD4CIhQIDAQAB
+  server-url: https://openapi-sandbox.dl.alipaydev.com/gateway.do
+#  
+#  app-id: 2021004156667393
+#  private-key: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCNZmIRqKRC0Fh4qlYIMYrHDVNHvlRIJlDy7Hp4uu/6TF2DrgMGmxBlVcyOa2gpPB9hSS+lx3UsHUN5LtC735uSN4UhFK1mbFd9Ev3sUGpXe46pt6KLoMctomfViPOw3M91VXEY0DDrMcpPPkK5BKkGbMhq+FaJRBahkmT0m5y9K3ul18BoPCc8Ip+/0Ml1oTHP/KV+iTe+TDB6uGH8kdLTGL9YPJqb2CPxFtHoRdoSl05y7O0I0t/bt+h8ZNZ8J3WgmeI3T5OO3OcvGGWkkzBHIF4+fEEMMFYg9eWEXnK2gCTEi9m/YEd9+uzRYi19ojQSL258exm3DLRkmLweqvfjAgMBAAECggEAYmmoxduW/72cZdc/65H3odSfauaIKHMqkfiOwOpyzcVKrLR2/Kj9/1l49oLAyzpCKObUF9C7t4lihbxUoP3ffCPSL5UBnrC3L6EBQ/EwIlUnlO3vXrj3B8bp98/KtATrCyH9hiSYd4l+4ipWLAmXTpZ14yWWrRDLo4aNZ0XLEEliROUqbqariXklovqirgXad0UOvaD9uo1ws+Zfj2CvWmbWzYZCfgAG3/X0nwGB+/JzWqLzua4jxnTbR4kbg5YxFuho7Jy/95wraDOws8RCJOP2M0+p8fOoXl3RUXhyHrv1avbCwg8eBmysL+koE+VdHFACL4FFDlijIzLamuvoSQKBgQDRbsiyKPZ8fHo82w9yJ5UNGPZpW3AKm3NjMK5Y7BvfRfGuGAwC76MCctmqgNEYoNNuMnFCjkTLCaLfzaakQvZq024io+6jp6amhhM2xMJz7ufwvZUv368gRCaxJDSkyem3Rzcvv3QDTOexqOw4o74Cz4BpiS4Plph+DiWzk1c6rQKBgQCs1xKPxC9sgYY2KWke/0pu3xDuoZIJwJVbGMGICSs3uxKNg3z41W2PF8MrhKx2+G7eTFt1siK9rynllfkdgQba91K195LcsgWo9xsCqZ3GetZbBS7PNRru5hXwnAbf+QY5/vRbMk5zKLya9vOYs0UNQi75dXezv3kJRsBc09NezwKBgF2UxxD0xM7zQBuZNtmnXi6wDMsfFH1o4LJdukn5lqq5sjg8foGBWrFpaGGLleMPWepPl9RJhevDroeaeO/FDB7HwtqvrZ5q90hJeKRsXwc2pWUpEVSG+tXMHg3hQ7SulERVCg/H2Krw3kbAWG0mnWzcE2EU7wQAIruQzr/jAoMxAoGBAJ7vs1Divh1QSgN6NwFbDq4/j8lwZ+Nx5aX8cNLQY55+90OMexoy4Olpl35oJVPNhd4DZ0MmiM3WynclXwvjf1NRhQxx2en6Bjxm5r6fDMfcY0sVzAKcueSfTeORBr1kuHYSXc+SxhMdjboOhtiPWVsk1h9tBqMS2pFOL0vtOfx/AoGBAI+pGsAgWDZTMLdq4YrNCUFFJPw8EOu3HoIXAa6Bq05Ysj9kV7xPgnzerow++C4wTQFZSmVGSfIcNxRPC3/nnE53YwEJexlqGxEAnDqel78qJNb+axsZjdQk3Zthzn42O03R3wv8UAYnrPK+f+rcwd5KIorITAqM9xFzpf0pG+iW
+#  public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjWZiEaikQtBYeKpWCDGKxw1TR75USCZQ8ux6eLrv+kxdg64DBpsQZVXMjmtoKTwfYUkvpcd1LB1DeS7Qu9+bkjeFIRStZmxXfRL97FBqV3uOqbeii6DHLaJn1YjzsNzPdVVxGNAw6zHKTz5CuQSpBmzIavhWiUQWoZJk9JucvSt7pdfAaDwnPCKfv9DJdaExz/ylfok3vkwwerhh/JHS0xi/WDyam9gj8RbR6EXaEpdOcuztCNLf27fofGTWfCd1oJniN0+TjtznLxhlpJMwRyBePnxBDDBWIPXlhF5ytoAkxIvZv2BHffrs0WItfaI0Ei9ufHsZtwy0ZJi8Hqr34wIDAQAB
+#  server-url: https://openapi.alipay.com/gateway.do
+  domain: https://9582yprs3528.vicp.fun/zz-example/zz-pay/ali-pay/
+  #  证书
+  #  app-cert-path: D:/path/appPublicCert.crt
+  #  ali-pay-cert-path: D:/path/alipayPublicCert.crt
+  #  ali-pay-root-cert-path: D:/path/alipayRootCert.crt
+
+# 微信支付
+wxpay:
+  app-id: wxc0940e06815c7042
+  app-secret:
+  mch-id: 1601526319
+  partner-key: fd6f070f8e2494b5198d87f564d6d80c
+  #  cert-path: classpath:cert/apiclient_cert.p12
+  domain: https://9582yprs3528.vicp.fun
+
+# 银联支付
+union:
+  appId: 8a81c1bd831e4c960188ffa038bc5489
+  appKey: 1ce280a453fb4495ba61b0df57c65fee
+  mid: 898100048161CC8
+  tid: DM791898
+  instMid: QRPAYDEFAULT
+  msgSrcId: 35FV
+  secretKey: c7FHnJ5hBQJfrA35Rcx3anTJw7QeSDafFwfChxk4tE4t6Gjs
+  callbackUrl: http://47.94.40.94:9999/v1/zzhlpaynofify/qrCodeNotify
+  baseHost: https://api-mop.chinaums.com #银联基础路径
+
+minio:
+  endpoint: http://59.110.218.80
+  port: 9001
+  secret-key: gFNrEvkLvFOmLZo8j5SoTYDlFMJ61xmX
+  access-key: 8cxkVvkxkaZ7EtV8
+  secure: false
+  bucket-name: pay-qr-code
+  nginx-host: http://59.110.218.80
+

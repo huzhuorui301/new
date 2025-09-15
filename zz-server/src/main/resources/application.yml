@@ -1,0 +1,245 @@
+#服务器配置
+server:
+  port: 81
+  undertow:
+    threads:
+      # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
+      io: 16
+      # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程,它的值设置取决于系统的负载
+      worker: 400
+    # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
+    buffer-size: 1024
+    # 是否分配的直接内存
+    direct-buffers: true
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      # MySql
+      validation-query: select 1
+      validation-query-timeout: 2000
+      initial-size: 5
+      max-active: 20
+      min-idle: 5
+      max-wait: 60000
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      #      /druid/login.html
+      stat-view-servlet:
+        enabled: true
+        login-username: zz
+        login-password: 1qaz@WSX
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*'
+        session-stat-enable: true
+        session-stat-max-count: 10
+
+# mybatis
+mybatis-plus:
+  mapper-locations: classpath*:com/zz/**/*Mapper.xml
+  #领域模型扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.zz.**.entity
+  #typeEnumsPackage: com.zz.dashboard.entity.enums
+  global-config:
+    # 关闭MP3.0自带的banner
+    banner: false
+    db-config:
+      #主键类型  0:"数据库ID自增", 1:"不操作", 2:"用户输入ID",3:"数字型snowflake", 4:"全局唯一ID UUID", 5:"字符串型snowflake";
+      id-type: assign_id
+      #字段策略
+      insert-strategy: not_null
+      update-strategy: not_null
+      where-strategy: not_null
+      #驼峰下划线转换
+      table-underline: true
+      # 逻辑删除配置
+      # 逻辑删除全局值（1表示已删除，这也是Mybatis Plus的默认配置）
+      logic-delete-value: 1
+      # 逻辑未删除全局值（0表示未删除，这也是Mybatis Plus的默认配置）
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    jdbc-type-for-null: null
+
+#knife4j配置
+knife4j:
+  #启用
+  enable: true
+  #基础认证
+  basic:
+    enable: true
+    username: zz
+    password: zz
+  #增强配置
+  setting:
+    enableSwaggerModels: true
+    enableDocumentManage: true
+    enableHost: false
+    enableHostText: http://localhost
+    enableRequestCache: true
+    enableFilterMultipartApis: false
+    enableFilterMultipartApiMethodType: POST
+    language: zh-CN
+    enableFooter: false
+    enableFooterCustom: true
+    footerCustomContent: Copyright © 2022 Zz All Rights Reserved
+
+#swagger公共信息
+swagger:
+  title: Zz 接口文档系统
+  description: Zz 接口文档系统
+  version: 3.0.1.RELEASE
+  license: Powered By Zz
+  license-url: https://xxxx
+  terms-of-service-url: https://xxxx
+  contact:
+    name: yuhongqian
+    email: yhq1913@sina.com
+
+
+#oss默认配置
+oss:
+  #是否开启
+  enabled: true
+  #租户模式
+  tenant-mode: false
+
+
+#zz配置
+zz:
+  #token配置
+  token:
+    #是否有状态
+    state: true
+    single: false
+
+  #redis序列化方式
+  redis:
+    # 序列化类型
+    serializer-type: ProtoStuff
+  #接口配置
+  api:
+    #报文加密配置
+    crypto:
+      #启用报文加密配置
+      enabled: true
+      #使用AesUtil.genAesKey()生成
+      aes-key: FG1hEdS56PXdsko2dQbqaOIp3Yh2I15E
+      #使用DesUtil.genDesKey()生成
+      des-key: 1NcmtDdttzRgcPac
+  #jackson配置
+  jackson:
+    #null自动转空值
+    null-to-empty: true
+    #大数字自动转字符串
+    big-num-to-string: true
+    #支持text文本请求,与报文加密同时开启
+    support-text-plain: true
+  #xss配置
+  xss:
+    # 是否开启
+    enabled: true
+    # 跳过路径
+    skip-url:
+      - /zz-infra/zz-chat/weixin
+      - /zz-infra/zz-desk/notice/submit
+      - /zz-lowcode/zz-workflow/process/start-process
+      - /zz-lowcode/zz-workflow/process/complete-task
+      - /zz-lowcode/zz-workflow/design/form/model/create-or-update-model
+      - /design-application-service/update-application-service
+      - /design-domain-aggregate/update-domain-service-config
+      - /design-domain-aggregate/create-domain-service-config
+  #安全框架配置
+  secure:
+    #接口放行
+    skip-url:
+      - /zz-auth/**
+      - /zz-auth/oauth/**
+      - /zz-system/tenant/query-tenant-info-detail
+      - /zz-test/**
+      - /zz-demo/**
+      - /zz-resource/sms/**
+      - /zz-auth/oauth2/**
+    #授权认证配置
+    auth:
+      - method: ALL
+        pattern: /zz-chat/weixin/**
+        expression: "hasAuth()"
+      - method: POST
+        pattern: /zz-desk/dashboard/upload
+        expression: "hasTimeAuth(9, 17)"
+      - method: POST
+        pattern: /zz-desk/dashboard/submit
+        expression: "hasAnyRole('administrator', 'admin', 'user')"
+    #基础认证配置
+    basic:
+      - method: ALL
+        pattern: /zz-desk/dashboard/info
+        username: "zz"
+        password: "zz"
+    #动态签名认证配置
+    sign:
+      - method: ALL
+        pattern: /zz-desk/dashboard/sign
+        crypto: "sha1"
+    #多终端认证配置
+    client:
+      - client-id: admin
+        path-patterns:
+          - /zz-admin/**
+  #多租户配置
+  tenant:
+    #多租户增强
+    enhance: true
+    #多租户授权保护
+    license: false
+    #动态数据源功能
+    dynamic-datasource: false
+    #动态数据源全局扫描
+    dynamic-global: false
+    #多租户字段名
+    column: tenant_id
+    #排除多租户逻辑
+    exclude-tables:
+      - zz_user
+
+  #负载均衡器
+  loadbalancer:
+    #是否启用
+    enabled: true
+    # 验证IP
+    prior-ip-pattern:
+      - 127.0.0.1
+      - 172.165.17.*
+
+#flowable配置
+flowable:
+  activity-font-name: \u5B8B\u4F53
+  label-font-name: \u5B8B\u4F53
+  annotation-font-name: \u5B8B\u4F53
+  check-process-definitions: false
+  database-schema-update: true # 表自动更新
+  async-executor-activate: false # 关闭定时任务
+  app:
+    enabled: false
+  cmmn:
+    enabled: false
+  idm:
+    enabled: false
+  dmn:
+    enabled: false
+  form:
+    enabled: false
+  content:
+    enabled: false
+  eventregistry:
+    enabled: false
+  custom-mybatis-x-m-l-mappers:
+    - com/zz/module/workflow/adapter/driven/process/def/WorkflowProcessDefinition.xml

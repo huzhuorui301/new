@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>bianalysisprd</artifactId>
+        <groupId>com.zz</groupId>
+        <version>3.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>cashareusagebc</artifactId>
+
+    <name>cashareusagebc</name>
+    <packaging>pom</packaging>
+    <version>3.0.0-SNAPSHOT</version>
+    <description/>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.zz</groupId>
+            <artifactId>zz-core-tool</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zz</groupId>
+            <artifactId>zz-starter-log</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.zz</groupId>
+                    <artifactId>zz-core-cloud</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.zz</groupId>
+            <artifactId>zz-starter-serialno</artifactId>
+        </dependency>
+    </dependencies>
+<modules>  <module>cashareusagebc-client</module>
+    <module>cashareusagebc-domain</module>
+    <module>cashareusagebc-northbound</module>
+    <module>cashareusagebc-southbound</module>
+  </modules>
+</project>
