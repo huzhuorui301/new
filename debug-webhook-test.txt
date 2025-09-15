@@ -1,0 +1,21 @@
+Debug Webhook Test
+===================
+
+Test ID: webhook-debug-001
+Timestamp: 2025-09-15 17:19:45
+Purpose: Debug webhook execution history display issue
+
+Issue Description:
+- Webhook successfully processed (confirmed in logs)
+- Execution history not showing in admin interface
+- Need to trigger another webhook to test recording
+
+Expected Behavior:
+- This push should appear in webhook execution history
+- History should show: timestamp, repository, branch, status
+
+Debug Info:
+- Repository: https://github.com/huzhuorui301/new
+- Branch: main
+- Webhook endpoint: /api/webhook/github/{warehouseId}
+- Previous log shows: "GitHub webhook处理完成: 70a06857-16f8-4e2e-9ecb-116a555360f0, 结果: True"
