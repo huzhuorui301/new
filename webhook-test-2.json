@@ -1,0 +1,23 @@
+{
+  "webhook_test": {
+    "test_id": "webhook-test-002",
+    "timestamp": "2025-09-15T16:32:00Z",
+    "purpose": "Testing webhook trigger on main branch",
+    "event_type": "push",
+    "branch": "main",
+    "repository": "https://github.com/huzhuorui301/new",
+    "test_data": {
+      "file_type": "json",
+      "commit_message": "Add webhook test file #2",
+      "expected_webhook_trigger": true
+    },
+    "validation": {
+      "should_trigger_webhook": true,
+      "webhook_payload_expected": {
+        "event": "push",
+        "ref": "refs/heads/main",
+        "repository_name": "new"
+      }
+    }
+  }
+}
