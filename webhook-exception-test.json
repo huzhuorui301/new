@@ -1,0 +1,21 @@
+{
+  "test_purpose": "验证KoalaWiki系统空引用异常修复",
+  "test_id": "webhook-exception-test-001",
+  "timestamp": "2025-09-15T17:22:00Z",
+  "expected_behavior": {
+    "webhook_processing": "成功处理",
+    "history_recording": "正确保存执行历史",
+    "error_handling": "妥善处理DocsFunction.Read异常"
+  },
+  "validation_points": [
+    "日志中不应出现NullReferenceException",
+    "执行历史应出现在管理界面",
+    "处理时间应被记录",
+    "错误信息应被妥善处理"
+  ],
+  "koalawiki_debug_info": {
+    "container": "koalawiki-1",
+    "error_location": "DocsFunction.cs:line 101",
+    "warehouse_id": "70a06857-16f8-4e2e-9ecb-116a555360f0"
+  }
+}
