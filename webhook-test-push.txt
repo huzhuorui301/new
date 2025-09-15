@@ -1,0 +1,18 @@
+Webhook Push Test File
+=====================
+
+This file was created to test webhook functionality on git push.
+
+Created at: 2025-09-15 
+Purpose: Testing webhook triggers when pushing to main branch
+
+Test Information:
+- Repository: new
+- Target Branch: main
+- Action: git push
+- Expected Result: webhook should be triggered automatically
+
+This is a simple test file to verify webhook integration is working correctly.
+
+Test ID: webhook-push-test-001
+Status: Ready for push
